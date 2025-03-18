@@ -15,20 +15,6 @@ fi
 
 echo "using wallet address: $(cast wallet address $PRK)"
 
-$CONTENDER setup $CONTENDERPATH/scenarios/precompileStress.toml $RPC_URL -p $PRK
-if [ $? -ne 0 ]; then
-  exit 1
-fi
-$CONTENDER setup $CONTENDERPATH/scenarios/uniV3.toml $RPC_URL -p $PRK --min-balance 21
-if [ $? -ne 0 ]; then
-  exit 1
-fi
-
 while true; do
-  $CONTENDER run fill-block $RPC_URL -p $PRK --sdp -d 20 -i 1 -n 20 &
-  sleep 5
-  $CONTENDER spam $CONTENDERPATH/scenarios/precompileStress.toml $RPC_URL -p $PRK --tps 20 -d 20 -s 0x1111111111111111111111111111111133333333333333333333333333333333 &
-  sleep 5
-  $CONTENDER spam $CONTENDERPATH/scenarios/uniV3.toml $RPC_URL -p $PRK --tps 20 -d 20 -s 0xffffffffffffffffffffffffffffffffeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee &
-  sleep 21
+  $CONTENDER run fill-block $RPC_URL -p $PRK --sdp -d 20 -i 1 -n 50
 done
